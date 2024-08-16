@@ -188,3 +188,65 @@
   - source code의 필요 여부에서도 차이
   - 성능 최적화 - compiler 방식에서 용이
 
+---
+
+## part 2. C 프로그래밍의 시작
+
+### section 7. 개발환경 구축
+
+#### Win11기반 Visual Studio Community 2022 개발환경 설정
+- (실습 환경) Windows 11, 64bit CPU, Visual Studio 2022 Community
+- Visual Studio 2022 환경설정
+  - 도구 → 설정 가져오기 및 내보내기 마법사 → 모두 다시 설정 → 기본설정 모음 선택에서 Visual C++ 선택'
+  - 도구 → 옵션  → 환경 → 글꼴 및 색에서 개발자용 글꼴로 설정(ex. consolas) - 1, l, I가 정확히 구분되어야 함
+
+#### 주요 단축키와 첫 번째 예제 작성 (feat. Hello world!)
+- Visual Studio 2022 주요 단축키
+  - F4: 오류 발생 지점으로 이동
+  - **F5: 디버그 모드 실행** → 중단점에서 일시 정지하고 메모리 윈도우 등 확인을 위함
+  - shift + F5: 디버그 모드 강제 중단
+  - F7: 프로젝트 빌드(cf. compile + link를 함께 묶어 build라 부름)
+  - F9: 중단점 설정
+  - F10: 디버그 모드에서 한 행 실행
+  - F11: 디버그 모드에서 함수 추적
+  - ctrl + F5: 실행
+- 새 프로젝트 만들기(파일 → 새로 만들기 → 프로젝트 → C++ 빈 프로젝트로 생성)
+  - 보기 → 클래스 뷰 추가(ctrl + shift + c)
+  - 프로젝트 → 새 항목 추가(ctrl + shift + a)
+    - Visual C++ 클릭 후 C++ 파일(.cpp)로 추가 후 확장자를 cpp에서 c로 변경
+- (cf.) F7로 빌드하면, 변경 내용 자동 저장됨
+
+#### 컴파일, 링크, 실행
+- 중요한 세 가지 시점 - compile time, link time(, build time), runtime
+  - compile time: .c 소스코드를 object file(.obj 확장자, 목적 파일)로 번역
+    - 번역, 문법 검사 등
+    - (cf.) object file부터 이미 기계어가 들어감, 다만 완벽한 실행 파일은 아니고 조립을 위한 형태
+  - link time: object file과 라이브러리를 실행 파일로 합성
+    - 합성(조립)하는 시점
+      - link time error는 주로 "있다고 한 것이 없을 때" 발생함, 해결하는 데에 오래 걸릴 수 있음
+    - (cf.) compile은 compiler가 link는 linker가 수행, 각각이 SW
+  - build time: compile time + link time
+    - compile, link 과정을 거치면 실행 가능한 파일(.exe)이 결과로 나옴
+    - (cf.) Windows 환경에서 .obj, .exe 파일은 PE(portable executable) format(binary file이라고도 지칭)
+  - runtime: 실행
+    - (cf.) 에러 중 가장 좋지 않은 에러는 runtime error
+- source code와 object file
+  - source code file 확장명 .c
+  - 목적 파일 확장명 .obj
+  - 외부 라이브러리 파일 확장명 .lib
+  - .obj와 .lib를 합성해 실행파일(.exe) 생성
+
+#### VS 프로젝트 파일들에 대한 해설
+- Visual Studio IDE
+  - editor, compiler, linker 등을 포함
+- 솔루션 파일과 프로젝트 - VS만의 독특한 특징
+  - solution: 여러 project를 한 solution으로 묶어서 관리
+    - solution 파일 확장자 .sln
+    - solution 하위 x64 디렉토리 하위 Debug 디렉토리 등에 빌드 결과 .exe 파일
+    - Debug로 빌드했을 경우 .pdb(디버깅에 필요한 program database 파일)
+    - 각 project 디렉토리에 각종 세팅 파일과 .vcxproj(visual c extended project) 파일
+    - 각 project 디렉토리의 하위 x64 디렉토리 하위 Debug 디렉토리 등에 .obj 파일
+  - project: 여러 C언어 source code 파일을 하나로 묶어서 관리
+  - F7를 눌러 빌드할 때는 solution 전체를 단위로 빌드
+  - ctrl + F5를 눌러 실행할 때는 시작 프로젝트로 설정된 프로젝트를 실행
+    - 솔루션 탐색기 창에서 실행시킬 프로젝트를 마우스 우클릭 후 시작 프로젝트로 설정
